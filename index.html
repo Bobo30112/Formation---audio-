@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mes pistes audio de formation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 24px;
+      color: #222;
+      background: #f5f5f5;
+    }
+    .carte {
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px #0001;
+    }
+    audio { width: 100%; margin-top: 12px; }
+  </style>
+</head>
+<body>
+  <div class="carte">
+    <h1 id="titre">Écouter la piste audio</h1>
+    <p>Appuyez sur Lecture pour écouter cette piste.</p>
+    <audio id="lecteur" controls preload="metadata"></audio>
+    <p id="message"></p>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const fichier = params.get("audio");
+    const lecteur = document.getElementById("lecteur");
+    const titre = document.getElementById("titre");
+    const message = document.getElementById("message");
+
+    if (fichier && /^[a-zA-Z0-9_-]+\.m4a$/i.test(fichier)) {
+      lecteur.src = fichier;
+      titre.textContent = fichier.replace(/\.m4a$/i, "")
+        .replace(/^\d+_/, "").replace(/[_-]/g, " ");
+      lecteur.onerror = () => {
+        message.textContent = "Impossible de lire ce fichier. Vérifiez le lien.";
+      };
+    } else {
+      titre.textContent = "Piste audio";
+      message.textContent = "Le lien de cette piste est incomplet.";
+    }
+  </script>
+</body>
+</html>
