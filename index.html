@@ -38,7 +38,7 @@
     const message = document.getElementById("message");
 
    if (fichier && /^[a-zA-Z0-9 _-]+\.m4a$/i.test(fichier)) {
-      lecteur.src = fichier;
+      lecteur.src = "./" + encodeURIComponent(fichier);
       titre.textContent = fichier.replace(/\.m4a$/i, "")
         .replace(/^\d+_/, "").replace(/[_-]/g, " ");
       lecteur.onerror = () => {
